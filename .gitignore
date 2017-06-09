@@ -20,5 +20,6 @@
 *.lib
 *.sbr
 obj/
+bin/
 [Rr]elease*/
 _ReSharper*/
