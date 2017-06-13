@@ -47,6 +47,9 @@
             // 
             // pbScreen
             // 
+            this.pbScreen.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pbScreen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbScreen.Image = ((System.Drawing.Image)(resources.GetObject("pbScreen.Image")));
             this.pbScreen.Location = new System.Drawing.Point(156, 63);
@@ -68,6 +71,8 @@
             // 
             // lbClientIps
             // 
+            this.lbClientIps.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.lbClientIps.ContextMenuStrip = this.MenuIpSelect;
             this.lbClientIps.Location = new System.Drawing.Point(12, 63);
             this.lbClientIps.Name = "lbClientIps";
@@ -84,19 +89,19 @@
             this.tsmiWatchInTime,
             this.tsmiWatchHistory});
             this.MenuIpSelect.Name = "MenuIpSelect";
-            this.MenuIpSelect.Size = new System.Drawing.Size(125, 48);
+            this.MenuIpSelect.Size = new System.Drawing.Size(119, 48);
             // 
             // tsmiWatchInTime
             // 
             this.tsmiWatchInTime.Name = "tsmiWatchInTime";
-            this.tsmiWatchInTime.Size = new System.Drawing.Size(124, 22);
+            this.tsmiWatchInTime.Size = new System.Drawing.Size(118, 22);
             this.tsmiWatchInTime.Text = "即时监控";
             this.tsmiWatchInTime.Click += new System.EventHandler(this.tsmiWatchInTime_Click);
             // 
             // tsmiWatchHistory
             // 
             this.tsmiWatchHistory.Name = "tsmiWatchHistory";
-            this.tsmiWatchHistory.Size = new System.Drawing.Size(124, 22);
+            this.tsmiWatchHistory.Size = new System.Drawing.Size(118, 22);
             this.tsmiWatchHistory.Text = "历史记录";
             this.tsmiWatchHistory.Click += new System.EventHandler(this.tsmiWatchHistory_Click);
             // 
@@ -148,7 +153,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1096, 683);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lbStatus);
@@ -159,6 +164,7 @@
             this.Controls.Add(this.btnHandleService);
             this.Controls.Add(this.pbScreen);
             this.Name = "WatchScreenForm";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "客户端监控平台";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WatchScreenForm_FormClosing);

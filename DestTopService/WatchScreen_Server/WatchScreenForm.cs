@@ -10,6 +10,7 @@ using System.Threading;
 using System.Net;
 using System.Net.Sockets;
 using DestTop.Container;
+using DestTop.Container.ServerFunctions;
 
 namespace WatchScreen_Server
 {
@@ -36,6 +37,7 @@ namespace WatchScreen_Server
             string strHostName = Dns.GetHostName(); //得到本机的主机名 
             IPHostEntry ipEntry = Dns.GetHostEntry(strHostName); //取得本机IP       
             lbLocalIp.Text = ipEntry.AddressList[1].ToString() + ":" + port;
+            MakeVideo.Instance.StartRecord();
         }
 
         private void btnHandleService_Click(object sender, EventArgs e)

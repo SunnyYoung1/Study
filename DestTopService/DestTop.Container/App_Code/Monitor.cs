@@ -174,6 +174,7 @@ public class Monitor : System.MarshalByRefObject
         MemGraphic.ReleaseHdc(dc2);
         Graphic.Dispose();
         MemGraphic.Dispose();
+        //MemImage.Save("D:\\ImageCache\\a.bmp",ImageFormat.Bmp);
         return MemImage;
     }
     #endregion

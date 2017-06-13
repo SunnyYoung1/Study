@@ -2,7 +2,9 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using DestTop.Container.ServerInfo;
 
 namespace DestTop.Container
 {
@@ -28,7 +30,8 @@ namespace DestTop.Container
                 gr.DrawImage(image, rectDestination, 0, 0, srcWidth, srcHeight, GraphicsUnit.Pixel);
 
                 //保存图片
-                SaveImage(remoteEndPoint, bmp);
+                //SaveImage(remoteEndPoint, bmp);
+                Task.Factory.StartNew(()=>SaveSrcImage(remoteEndPoint, image));
                 return bmp;
             }
             catch (Exception ex)
@@ -67,6 +70,30 @@ namespace DestTop.Container
             string savePath = path + imageName;
             bmp.Save(savePath);
         }
+
+        private static void SaveSrcImage(string remoteEndPoint, Image image)
+        {
+            try
+            {
+                remoteEndPoint = remoteEndPoint.Substring(0, remoteEndPoint.IndexOf(":"));
+                DateTime now = DateTime.Now;
+
+                ClientImage clientImage=new ClientImage(remoteEndPoint,now.Year,now.Month,now.Day);
+                clientImage.SaveCurrentImage(image);
+            }
+            catch (Exception e)
+            {
+                
+            }
+            finally
+            {
+                if (image != null)
+                {
+                    image.Dispose();
+                }
+            }
+        }
+
         private static void CreateDirectory(string infoPath)
         {
             if (!Directory.Exists(infoPath))//若文件夹不存在则新建文件夹   

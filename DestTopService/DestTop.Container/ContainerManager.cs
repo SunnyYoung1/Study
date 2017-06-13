@@ -13,7 +13,7 @@ namespace DestTop.Container
     {
         private static ContainerManager _instance;
         private static readonly object ObjLock = new object();
-        private IPEndPoint ServerInfo;
+        private IPEndPoint ServerInfo = null;
         private Socket ClientSocket;
         //信息发送存储
         private Byte[] MsgSend;
@@ -39,6 +39,12 @@ namespace DestTop.Container
 
             return _instance;
         }
+
+        public bool IsConnected
+        {
+            get { return ClientSocket != null && ClientSocket.Connected; }
+        }
+
         /// <summary>
         /// 开启服务
         /// </summary>
@@ -52,29 +58,64 @@ namespace DestTop.Container
             t.Start();
         }
 
+        /// <summary>
+        /// 开启服务
+        /// </summary>
+        public void StartService(string ip,string port)
+        {
+            ServerInfo = new IPEndPoint(IPAddress.Parse(ip), Convert.ToInt32(port));
+
+            Connect();
+
+            MsgSend = new Byte[65535];
+            Thread t = new Thread(Go)
+            {
+                IsBackground = true
+            };
+            t.Start();
+        }
+
+        public void Connect()
+        {
+            try
+            {
+                ClientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                //服务端IP和端口信息设定,这里的IP可以是127.0.0.1，可以是本机局域网IP，也可以是本机网络IP
+                ServerInfo = ServerInfo ?? new IPEndPoint(IPAddress.Parse("10.101.42.105"), Convert.ToInt32(316));
+                ClientSocket.Connect(ServerInfo);//客户端连接服务端指定IP端口，Socket
+            }
+            catch (Exception e)
+            {
+                log.log("错误1：" + e.Message);
+            }
+        }
+
         public void Go()
         {
             try
             {
                 lock (this)
                 {
-                    ClientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                    //服务端IP和端口信息设定,这里的IP可以是127.0.0.1，可以是本机局域网IP，也可以是本机网络IP
-                    ServerInfo = new IPEndPoint(IPAddress.Parse("10.101.42.105"), Convert.ToInt32(316));
-                    ClientSocket.Connect(ServerInfo);//客户端连接服务端指定IP端口，Socket
+                    //ClientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    ////服务端IP和端口信息设定,这里的IP可以是127.0.0.1，可以是本机局域网IP，也可以是本机网络IP
+                    //ServerInfo = ServerInfo?? new IPEndPoint(IPAddress.Parse("10.101.42.105"), Convert.ToInt32(316));
+                    //ClientSocket.Connect(ServerInfo);//客户端连接服务端指定IP端口，Socket
 
-                    int REnd = ClientSocket.Receive(MsgSend);    //等待接收服务端发送的指令
-                    string msg = Encoding.Unicode.GetString(MsgSend, 0, REnd);
-                    if (msg == "Send")
+                    if (IsConnected)
                     {
-                        MsgSend = new byte[65535];
-                        MsgSend = new Monitor().GetDesktopBitmapBytes();
-                        //MsgSend = Encoding.Unicode.GetBytes("图片" + imgIndex);
-                        if (ClientSocket.Connected)
+                        int REnd = ClientSocket.Receive(MsgSend); //等待接收服务端发送的指令
+                        string msg = Encoding.Unicode.GetString(MsgSend, 0, REnd);
+                        if (msg == "Send")
                         {
-                            //将数据发送到连接的 System.Net.Sockets.Socket。
-                            ClientSocket.Send(MsgSend);
-                            ClientSocket.BeginSend(MsgSend, 0, MsgSend.Length, SocketFlags.None, new AsyncCallback(ReceiveCallBack), ClientSocket);
+                            MsgSend = new byte[65535];
+                            MsgSend = new Monitor().GetDesktopBitmapBytes();
+                            //MsgSend = Encoding.Unicode.GetBytes("图片" + imgIndex);
+                            if (ClientSocket.Connected)
+                            {
+                                //将数据发送到连接的 System.Net.Sockets.Socket。
+                                ClientSocket.Send(MsgSend);
+                                ClientSocket.BeginSend(MsgSend, 0, MsgSend.Length, SocketFlags.None, new AsyncCallback(ReceiveCallBack), ClientSocket);
+                            }
                         }
                     }
                 }
@@ -83,7 +124,7 @@ namespace DestTop.Container
             {
                 log.log("错误1："+ex.Message);
                 CloseSocket();
-                Go();
+                //Go();
             }
         }
 
@@ -107,7 +148,7 @@ namespace DestTop.Container
             {
                 log.log("错误2：" + ex.Message);
                 CloseSocket();
-                Go();
+                //Go();
             }
         }
         protected void CloseSocket()

@@ -90,6 +90,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FFMPEG\ffmpeg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FFMPEG\ffplay.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FFMPEG\ffprobe.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\0418dc2f3780ea4ccc8ee9c64d7be174.jpg" />
   </ItemGroup>
   <ItemGroup>

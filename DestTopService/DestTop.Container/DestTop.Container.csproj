@@ -44,10 +44,14 @@
   <ItemGroup>
     <Compile Include="App_Code\CaptureScreen.cs" />
     <Compile Include="App_Code\HideTaskmgrList.cs" />
+    <Compile Include="App_Code\ImagesToVideo.cs" />
     <Compile Include="App_Code\Monitor.cs" />
+    <Compile Include="App_Code\PathConfig.cs" />
     <Compile Include="ContainerManager.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerFunctions\MakeVideo.cs" />
+    <Compile Include="ServerInfo\ClientImageInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
