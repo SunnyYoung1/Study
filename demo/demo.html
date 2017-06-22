@@ -35,17 +35,26 @@
 	</label>
 	<label class="js_open transitions" style="opacity: 0.3">否</label>
 </div>
+
+<div>
+	<label class="js_close transitions" style="margin-bottom: 10px;">是</label>
+	<input type="checkbox" checked="" value="0" id="isclose1" class="slidecheckbox" name="isclose">
+	<label for="isclose1">
+		<span class="slidecheckbox-slide"></span>
+	</label>
+	<label class="js_open transitions" style="opacity: 0.3">否</label>
+</div>
     
     <script type="text/javascript">
 	$(function(){
 		$(".slidecheckbox").on("change", function () {
             if ($(this).is(':checked')) {
-                $(".js_close").css("opacity", 1);
-                $(".js_open").css("opacity", 0.3);
+                $(this).prev(".js_close").css("opacity", 1);
+                $(this).nextAll(".js_open").css("opacity", 0.3);
             }
             else {
-                $(".js_close").css("opacity", 0.3);
-                $(".js_open").css("opacity", 1);
+                $(this).prev(".js_close").css("opacity", 0.3);
+                $(this).nextAll(".js_open").css("opacity", 1);
             }
         });
 	})
