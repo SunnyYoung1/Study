@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>demo</title>
+	<script src="./demo_files/jquery.js"></script>
+<body class="skin-blue">
+<link rel="stylesheet" href="./demo_files/jquery-slidecheckbox.css">
+<style type="text/css">
+
+    input.slidecheckbox + label {
+        width: 40px;
+        height: 20px;
+        top: 5px !important;
+        margin-bottom: 0px;
+    }
+
+    input.slidecheckbox + label > span.slidecheckbox-slide {
+        width: 16px;
+        height: 14px;
+        top: 3px;
+        left: 29px;
+    }
+
+    .transitions {
+        transition: all 0.5s;
+    }
+</style>
+
+
+<div>
+	<label class="js_close transitions" style="margin-bottom: 10px;">是</label>
+	<input type="checkbox" checked="" value="0" id="isclose" class="slidecheckbox" name="isclose">
+	<label for="isclose">
+		<span class="slidecheckbox-slide"></span>
+	</label>
+	<label class="js_open transitions" style="opacity: 0.3">否</label>
+</div>
+    
+    <script type="text/javascript">
+	$(function(){
+		$(".slidecheckbox").on("change", function () {
+            if ($(this).is(':checked')) {
+                $(".js_close").css("opacity", 1);
+                $(".js_open").css("opacity", 0.3);
+            }
+            else {
+                $(".js_close").css("opacity", 0.3);
+                $(".js_open").css("opacity", 1);
+            }
+        });
+	})
+	</script>
+</body>
+</html>
